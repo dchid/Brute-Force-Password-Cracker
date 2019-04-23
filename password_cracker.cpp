@@ -32,7 +32,17 @@ int main(){
 
 //read in using wordlist
 void wordList(){
+        cout << "please enter your wordlist\n";
+    string plainText;
     
+    //enter in wordList
+    
+    //While loop terminates when the list is done or a match has been found
+    //while (wordlist is not empty && plaintext.compare(hash) == 0){}
+    
+    //if a match has been found, output the matched plaintext
+    
+    //else cout << "sorry no match found";
 }
 
 //brute force
