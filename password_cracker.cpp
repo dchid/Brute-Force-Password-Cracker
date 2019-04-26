@@ -3,8 +3,12 @@
 using namespace std;
 
 int main(){
-	std::cout << "Welcome to the C++ password cracker\n";
-	std::cout << "Would you like to use a wordlist?\n (y/n)";
+    cout << "Welcome to the C++ password cracker\n";
+    cout << "please input the hashed password you'd like to crack\n";
+    string inputHash;
+    cin >> inputHash;
+    cout << "you entered " + inputHash + "\n";
+	cout << "Would you like to use a wordlist?\n (y/n)";
     
     char yesOrNo;
     
