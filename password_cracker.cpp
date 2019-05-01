@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 int main(){
@@ -36,18 +37,43 @@ int main(){
 
 //read in using wordlist
 void wordList(){
-        cout << "please enter your wordlist\n";
+    cout << "please enter your wordlist\n";
     string plainText;
-    
-    //enter in wordList
-    
-    //While loop terminates when the list is done or a match has been found
-    //while (wordlist is not empty && plaintext.compare(hash) == 0){}
-    
-    //if a match has been found, output the matched plaintext
-    
-    //else cout << "sorry no match found";
+    std::ifstream file("rockyou.txt");
+    std::string s;
+
+    while (std::getline(file, s)){
+
+   	 if (!file){ //testing if file opens
+         cout << "unable to open file";
+         exit(1);
+
+   	 if (file has next line){
+         s = file current line;
+	
+        }
+    else {
+        current line = next line;
+  }
 }
+}
+    string line;
+    string str;
+    string hash = "FF0EB2864FEB22354747F8C85D42CCB5"; //testing hash
+    bool found = false;
+
+	while (wordlist has next line && found == false){
+        str = wordlist current line;
+        string hashedStr = hash(str);
+        	if (hashedStr.compare(hash) == true){
+                print("the plain text string is " + str);
+                found = true
+        	}
+        	else {
+                current line = next line;
+        	}
+
+	}
 
 //brute force
 void bruteForce(){
