@@ -92,9 +92,9 @@ bool hashCompare(string plaintext, string hash){
     const char *command = strcmd.c_str();
     system(command);
 
-    string hashedString = md5(plaintext);
+    //string hashedString = md5(plaintext);
 
-    std:cout << hashedString + "\n" + hash;
+    //std:cout << hashedString + "\n" + hash;
 
     return plaintext.compare(hash) == 0;
 }
