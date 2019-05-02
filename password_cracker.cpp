@@ -46,8 +46,43 @@ int main(){
 void wordList(){
     cout << "please enter your wordlist\n";
     string plainText;
+    std::ifstream file("rockyou.txt");
+    std::string s;
     bool matchfound = hashCompare("ponies", "47346fc7580de7596d7df8d115a3545d");
-    
+    while (std::getline(file, s)){
+
+if (!file){ //testing if file opens
+cout << "unable to open file";
+exit(1);
+
+if (file has next line){
+        s = file current line;
+
+        }
+else {
+        current line = next line;
+  }
+}   
+}
+string line;
+	string str;
+string hash = "FF0EB2864FEB22354747F8C85D42CCB5"; //testing hash
+bool found = false;
+
+while (wordlist has next line && found == false){
+        str = wordlist current line;
+        string hashedStr = hash(str);
+        if (hashedStr.compare(hash) == true){
+                print("the plain text string is " + str);
+                found = true
+        }
+        else {
+                current line = next line;
+        }
+
+
+
+
     //enter in wordList
     
     //While loop terminates when the list is done or a match has been found
