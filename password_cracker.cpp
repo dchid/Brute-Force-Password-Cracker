@@ -1,3 +1,12 @@
+/*
+ * This is David Chidester, Patrick Charleton, and Elijah Crockett's final project
+ * for Analysis of Algorithms at Willamette University.
+ * it is indended to be a rudimentary version of a password cracking tool such as
+ * John the Ripper. It uses crunch as a dependancy and is intended primarily for
+ * pedigogical purposes. If you need an actual tool for password cracking, use
+ * John the Ripper instead.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -15,7 +24,7 @@ int main(){
     string inputHash;
     cin >> inputHash;
     cout << "you entered " + inputHash + "\n";
-	cout << "Would you like to use a wordlist?\n (y/n)\n";
+	cout << "Would you like to use a wordlist?\n(y/n)\n";
     
     char yesOrNo;
     
@@ -25,6 +34,7 @@ int main(){
         if (yesOrNo == 'y' || yesOrNo == 'Y'){
             cout << "Ok using wordlist\n";
             inputInvalid = false;
+            wordList();
         }
         else if (yesOrNo == 'n' || yesOrNo == 'N'){
             cout << "Ok brute forcing\n";
@@ -34,63 +44,33 @@ int main(){
         else cout << "Bad input: please type either 'y' or 'n'\n";
     }
 
-	string test = "test";
-    string test2 = "test";
-	if (test.compare(test2) == 0){
-		cout << "Match Found!\n";
-	}
 	return 0;
 }
 
-//read in using wordlist
+//crack passwords using wordlist
 void wordList(){
     cout << "please enter your wordlist\n";
+    string wordlist;
+    cin >> wordlist;
+    cout << "using " + wordlist + "\n";
+    
     string plainText;
-    std::ifstream file("rockyou.txt");
-    std::string s;
+    //testing that file is read in
+    std::ifstream file(wordlist);
+    if (!file){ //testing if file opens
+        cout << "unable to open file\n";
+        exit(1);
+    }
+    
     bool matchfound = hashCompare("ponies", "47346fc7580de7596d7df8d115a3545d");
-    while (std::getline(file, s)){
+    if (matchfound == true){
+        cout << "The password is \n";
+    }
+    else {
+        cout << "not found\n";
+    }
+ //   while (std::getline(file, s)){
 
-if (!file){ //testing if file opens
-cout << "unable to open file";
-exit(1);
-
-if (file has next line){
-        s = file current line;
-
-        }
-else {
-        current line = next line;
-  }
-}   
-}
-string line;
-	string str;
-string hash = "FF0EB2864FEB22354747F8C85D42CCB5"; //testing hash
-bool found = false;
-
-while (wordlist has next line && found == false){
-        str = wordlist current line;
-        string hashedStr = hash(str);
-        if (hashedStr.compare(hash) == true){
-                print("the plain text string is " + str);
-                found = true
-        }
-        else {
-                current line = next line;
-        }
-
-
-
-
-    //enter in wordList
-    
-    //While loop terminates when the list is done or a match has been found
-    //while (wordlist is not empty && plaintext.compare(hash) == 0){}
-    
-    //if a match has been found, output the matched plaintext
-    
-    //else cout << "sorry no match found";
 }
 
 //brute force
@@ -107,10 +87,14 @@ void bruteForce(){
 }
 
 bool hashCompare(string plaintext, string hash){
+    
+    string strcmd = "echo -n " + plaintext + " | md5sum > hashedstr.txt";
+    const char *command = strcmd.c_str();
+    system(command);
 
     string hashedString = md5(plaintext);
 
-    cout << hashedString + "\n" + hash;
+    std:cout << hashedString + "\n" + hash;
 
     return plaintext.compare(hash) == 0;
 }
