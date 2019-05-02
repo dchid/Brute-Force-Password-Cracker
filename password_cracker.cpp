@@ -1,5 +1,5 @@
 /*
- * This is David Chidester, Patrick Charleton, and Elijah Crockett's final project
+ * This is David Chidester, Patrick Charlton, and Elijah Crockett's final project
  * for Analysis of Algorithms at Willamette University.
  * it is indended to be a rudimentary version of a password cracking tool such as
  * John the Ripper. It uses crunch as a dependancy and is intended primarily for
@@ -14,8 +14,8 @@
 
 using namespace std;
 
-void bruteForce();
-void wordList();
+void bruteForce(string hash);
+void wordList(string hash);
 bool hashCompare(string plaintext, string hash);
 
 int main(){
@@ -34,12 +34,12 @@ int main(){
         if (yesOrNo == 'y' || yesOrNo == 'Y'){
             cout << "Ok using wordlist\n";
             inputInvalid = false;
-            wordList();
+            wordList(inputHash);
         }
         else if (yesOrNo == 'n' || yesOrNo == 'N'){
             cout << "Ok brute forcing\n";
             inputInvalid = false;
-            bruteForce();
+            bruteForce(inputHash);
         }
         else cout << "Bad input: please type either 'y' or 'n'\n";
     }
@@ -48,33 +48,39 @@ int main(){
 }
 
 //crack passwords using wordlist
-void wordList(){
+void wordList(string hash){
     cout << "please enter your wordlist\n";
     string wordlist;
     cin >> wordlist;
     cout << "using " + wordlist + "\n";
     
-    string plainText;
-    //testing that file is read in
+    //reading in file
     std::ifstream file(wordlist);
-    if (!file){ //testing if file opens
+    //testing if file opens
+    if (!file){
         cout << "unable to open file\n";
         exit(1);
     }
     
-    bool matchfound = hashCompare("ponies", "47346fc7580de7596d7df8d115a3545d");
-    if (matchfound == true){
-        cout << "The password is \n";
+        string plainText;
+    // reading in wordlist line by line
+    bool matchFound;
+    while (std::getline(file, plainText) && matchFound == false){
+        cout << plainText + "\n";
+        matchFound = hashCompare(plainText, hash);
+    }
+
+    if (matchFound == true){
+        cout << "The password is: ";
+        cout << plainText + "\n";
     }
     else {
         cout << "not found\n";
     }
- //   while (std::getline(file, s)){
-
 }
 
 //brute force
-void bruteForce(){
+void bruteForce(string hash){
     cout << "how long would you like your maximum string to be?\n";
     int maxLength;
     cin >> maxLength;
@@ -83,18 +89,46 @@ void bruteForce(){
     cout << "\ngenerating strings\n";
     const char *command = strcmd.c_str();
     system(command);
-    wordList();
+
+    //reading in file
+    std::ifstream file("output.txt");
+    //testing if file opens
+    if (!file){
+        cout << "unable to open file\n";
+        exit(1);
+    }
+
+    string plainText;
+    // reading in wordlist line by line
+    bool matchFound;
+    while (std::getline(file, plainText) && matchFound == false){
+        cout << plainText + "\n";
+        matchFound = hashCompare(plainText, hash);
+    }
+
+    if (matchFound == true){
+        cout << "The password is: ";
+        cout << plainText + "\n";
+    }
+    else{
+        cout << "sorry, not match found\n";
+    }
 }
 
-bool hashCompare(string plaintext, string hash){
-    
-    string strcmd = "echo -n " + plaintext + " | md5sum > hashedstr.txt";
+bool hashCompare(string plainText, string hash){
+
+    //need to fix concurency issue with reading and writing
+    string strcmd = "echo -n " + plainText + " | md5sum > hashedstr.txt";
     const char *command = strcmd.c_str();
     system(command);
 
-    //string hashedString = md5(plaintext);
+    std::ifstream file("hashedstr.txt");
 
-    //std:cout << hashedString + "\n" + hash;
+        // reading in wordlist line by line
+    while (std::getline(file, plainText)){
+        plainText = plainText.erase(33, 2);
+        cout << plainText + "\n";
+    }
 
-    return plaintext.compare(hash) == 0;
+    return !(plainText.compare(hash) == 0);
 }
